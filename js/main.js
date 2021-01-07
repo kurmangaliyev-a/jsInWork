@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             'months': ['января', "февраля", "марта", "апреля", "мая", "июня", "июля", "сентября", "октября", "декабря"]
         };
         const dates = {
-            'lastDay': new Date('2021-02-05'),
+            'lastDay': new Date('2021-01-12'),
             'now':new Date()
         }
         dates.lastDay.setUTCHours(0);
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
         let timerId = setInterval(renderTimer, 1000);
         promotionText();
+        renderTimer();
     }
 
 

@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'months': ['января', "февраля", "марта", "апреля", "мая", "июня", "июля", "сентября", "октября", "декабря"]
         };
         const dates = {
-            'lastDay': new Date('2021-02-05'),
+            'lastDay': new Date('2021-01-12'),
             'now': new Date()
         }
         dates.lastDay.setUTCHours(0);
@@ -59,12 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         function renderTimer() {
             let dateNow = new Date();
-            //           if (dates.now - dates.lastDay<0) clearInterval(timerId);
+            if (dateNow  - dates.lastDay<0) clearInterval(timerId);
             elems.timerBLocks[0].textContent = Math.floor((dates.lastDay - dateNow) / 1000 / 3600 / 24);
             elems.timerBLocks[1].textContent = Math.floor((dates.lastDay - dateNow) / 1000 / 3600 % 24);
             elems.timerBLocks[2].textContent = Math.floor((dates.lastDay - dateNow) / 1000 / 60 % 60);
             elems.timerBLocks[3].textContent = Math.floor((dates.lastDay - dateNow) / 1000 % 60);
         }
+        renderTimer();
         let timerId = setInterval(renderTimer, 1000);
         promotionText();
     }
