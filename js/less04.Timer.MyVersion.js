@@ -59,15 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         function renderTimer() {
             let dateNow = new Date();
-            if (dateNow  - dates.lastDay<0) clearInterval(timerId);
+            //           if (dates.now - dates.lastDay<0) clearInterval(timerId);
             elems.timerBLocks[0].textContent = Math.floor((dates.lastDay - dateNow) / 1000 / 3600 / 24);
             elems.timerBLocks[1].textContent = Math.floor((dates.lastDay - dateNow) / 1000 / 3600 % 24);
             elems.timerBLocks[2].textContent = Math.floor((dates.lastDay - dateNow) / 1000 / 60 % 60);
             elems.timerBLocks[3].textContent = Math.floor((dates.lastDay - dateNow) / 1000 % 60);
         }
-        renderTimer();
         let timerId = setInterval(renderTimer, 1000);
         promotionText();
+        renderTimer();
     }
 
 
