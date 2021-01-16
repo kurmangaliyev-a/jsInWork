@@ -183,11 +183,89 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
     }
+    function contactUs(){
+        const forms = document.querySelectorAll('form');
+        forms.forEach(item=>{
+            postData(item);
+        });
+        //object
+        /*function postData(form){
+            form.addEventListener('submit', (event)=>{
+                event.preventDefault();
+                const statusMessage = document.createElement('div');
+                statusMessage.classList.add('status');
+                statusMessage.textContent = message.loading;
+                form.append(statusMessage);
+                const request = new XMLHttpRequest();
+                request.open('POST', 'server.php');
+                //request.setRequestHeader('Content-type','multipart/form-data'); когда используем xmlhttprequest и formdata не нужно устанавливать заголовок
+                const formData = new FormData(form);
+                request.send(formData);
+
+                request.addEventListener('load',()=>{
+                    if(request.status ===200){
+                        console.log(request.response);
+                        form.reset();
+                        statusMessage.textContent = message.success;
+                        setTimeout(()=>{
+                            statusMessage.remove();
+                        },2000)
+                    }else{
+                        statusMessage.textContent = message.failure;
+                    }
+                })
+            });
+        }*/
+        //Json формат
+        function postData(form) {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                //добавляем блок который будет показывать статус отправки
+                const message = {
+                    loading: 'Загрузка',
+                    success: 'Спасибо! Мы с вами свяжемся',
+                    failure: 'Что то пошло не так'
+                }
+                const statusMessage = document.createElement('div');
+                statusMessage.classList.add('status');
+                statusMessage.textContent = message.loading;
+                form.append(statusMessage);
 
 
 
+                const request = new XMLHttpRequest();  //тип отправки
+                request.open('POST', 'server.php'); //куда и как отправляем
+                request.setRequestHeader('Content-type','application/json'); //заголовок
+                const formData = new FormData(form);      //инфа которую отправляю
+                const object = {};
+                formData.forEach((value,key)=>{
+                    object[key]=value;
+                })
+                const json = JSON.stringify(object); //приоброзуют в json
+                request.send(json);          //отправляю инфу на сервер
 
 
+
+                request.addEventListener('load', () => {       //когда загрузится ответ
+                    if (request.status === 200) { //если успешно выполнится следующее:
+                        console.log(request.response); //выведется ответ
+                        form.reset(); //данные с формы удаляются
+                        statusMessage.textContent = message.success; //меняем статус ответа для клиента
+                        setTimeout(() => { //через 2 секунды убираем ответ
+                            statusMessage.remove();
+                        }, 2000)
+                    } else {
+                        statusMessage.textContent = message.failure; //выдаём ошибку
+                    }
+                })
+            });
+        }
+    }
+
+
+
+    contactUs();
     menuBlock();
     nutritionStyle();
     timer();
